@@ -48,14 +48,14 @@
   50% { transform: translateY(-20px) rotate(5deg); }
 }
 
-.left-panel {
+.mezclas-view .left-panel {
   width: 720px;
   flex-shrink: 0;
   position: relative;
   z-index: 1;
 }
 
-.controls-panel {
+.mezclas-view .controls-panel {
   width: 380px;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@
   z-index: 1;
 }
 
-.card {
+.mezclas-view .card {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(15px);
   padding: 20px;
@@ -80,7 +80,7 @@
   overflow: hidden;
 }
 
-.card::before {
+.mezclas-view .card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -98,14 +98,14 @@
   100% { background-position: -200% 0; }
 }
 
-.card:hover {
+.mezclas-view .card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 
     0 15px 40px rgba(0, 0, 0, 0.15),
     0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.matraz-canvas {
+.mezclas-view .matraz-canvas {
   background: linear-gradient(135deg, #163ce4 0%, #2d3748 100%);
   border-radius: 16px;
   box-shadow: 
@@ -118,7 +118,7 @@
   position: relative;
 }
 
-.matraz-canvas::before {
+.mezclas-view .matraz-canvas::before {
   content: '✨ ¡Experimento en Progreso! ✨';
   position: absolute;
   top: -25px;
@@ -134,7 +134,7 @@
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
 }
 
-button {
+.mezclas-view .mezclas-view button {
   padding: 14px 18px;
   border-radius: 14px;
   border: none;
@@ -151,7 +151,7 @@ button {
   letter-spacing: 0.5px;
 }
 
-button::before {
+.mezclas-view .mezclas-view button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -162,34 +162,34 @@ button::before {
   transition: left 0.6s ease;
 }
 
-button:hover::before {
+.mezclas-view .mezclas-viewbutton:hover::before {
   left: 100%;
 }
 
-button:hover {
+.mezclas-view .mezclas-viewbutton:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.2),
     0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-button:active {
+.mezclas-view .mezclas-viewbutton:active {
   transform: translateY(0) scale(0.98);
 }
 
-.row {
+.mezclas-view .mezclas-view .row {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.small {
+.mezclas-view .mezclas-view .small {
   font-size: 14px;
   color: #4a5568;
   line-height: 1.5;
 }
 
-h2 {
+.mezclas-view .mezclas-view h2 {
   color: #2d3748;
   margin: 0 0 16px 0;
   font-weight: 800;
@@ -207,7 +207,7 @@ h2 {
   to { text-shadow: 0 0 20px rgba(77, 150, 255, 0.3); }
 }
 
-h4 {
+.mezclas-view h4 {
   color: #2d3748;
   margin: 0 0 12px 0;
   font-weight: 700;
@@ -218,7 +218,7 @@ h4 {
   background-clip: text;
 }
 
-input[type="range"] {
+.mezclas-view input[type="range"] {
   width: 100%;
   margin: 16px 0;
   background: transparent;
@@ -231,7 +231,7 @@ input[type="range"] {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-input[type="range"]::-webkit-slider-thumb {
+.mezclas-view input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 24px;
@@ -250,12 +250,12 @@ input[type="range"]::-webkit-slider-thumb {
   50% { transform: scale(1.1); }
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
+.mezclas-view input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
-input[type="range"]::-moz-range-thumb {
+.mezclas-view input[type="range"]::-moz-range-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -265,7 +265,7 @@ input[type="range"]::-moz-range-thumb {
   border: 3px solid white;
 }
 
-.reagent {
+.mezclas-view .reagent {
   flex: 1;
   padding: 14px 16px;
   border-radius: 14px;
@@ -288,7 +288,7 @@ input[type="range"]::-moz-range-thumb {
   100% { transform: scale(1); opacity: 1; }
 }
 
-.reagent::after {
+.mezclas-view .reagent::after {
   content: '';
   position: absolute;
   top: 0;
@@ -300,38 +300,38 @@ input[type="range"]::-moz-range-thumb {
   transition: opacity 0.3s ease;
 }
 
-.reagent:hover::after {
+.mezclas-view .reagent:hover::after {
   opacity: 1;
 }
 
-.reagent:hover {
+.mezclas-view .reagent:hover {
   transform: translateY(-4px) scale(1.08);
   border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Colores de reactivos - Más vibrantes y divertidos */
-.rA { 
+.mezclas-view .rA { 
   background: linear-gradient(135deg, #e8f4f8, #b8e0f4);
   color: #2c5282;
   border: 2px solid #90cdf4;
   box-shadow: 0 6px 20px rgba(144, 205, 244, 0.3);
 }
 
-.rB { 
+.mezclas-view .rB { 
   background: linear-gradient(135deg, #f0e6ff, #d8b4fe);
   color: #553c9a;
   border: 2px solid #9f7aea;
   box-shadow: 0 6px 20px rgba(159, 122, 234, 0.3);
 }
 
-.rC { 
+.mezclas-view .rC { 
   background: linear-gradient(135deg, #fff9db, #ffec99);
   color: #744210;
   border: 2px solid #fcd34d;
   box-shadow: 0 6px 20px rgba(252, 211, 77, 0.3);
 }
 
-.danger { 
+.mezclas-view .danger { 
   background: linear-gradient(135deg, #ffcccc, #ff6b6b);
   color: white;
   border: 2px solid #fc8181;
@@ -344,20 +344,20 @@ input[type="range"]::-moz-range-thumb {
   50% { transform: scale(1.05); }
 }
 
-.danger:hover {
+.mezclas-view .danger:hover {
   background: linear-gradient(135deg, #ff6b6b, #e53e3e);
   transform: translateY(-4px) scale(1.1);
   box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
 }
 
-.help-section {
+.mezclas-view .help-section {
   background: linear-gradient(135deg, rgba(255, 245, 157, 0.3), rgba(197, 225, 255, 0.3));
   border-left: 6px solid #ffd93d;
   border-radius: 20px;
   position: relative;
 }
 
-.help-section::before {
+.mezclas-view .help-section::before {
   content: '💡';
   position: absolute;
   top: 15px;
@@ -366,7 +366,7 @@ input[type="range"]::-moz-range-thumb {
   opacity: 0.5;
 }
 
-.help-section strong {
+.mezclas-view .help-section strong {
   color: #2d3748;
   display: block;
   margin-bottom: 16px;
@@ -377,55 +377,55 @@ input[type="range"]::-moz-range-thumb {
   background-clip: text;
 }
 
-.help-section ul {
+.mezclas-view .help-section ul {
   margin: 12px 0;
   padding-left: 20px;
 }
 
-.help-section li {
+.mezclas-view .help-section li {
   margin-bottom: 8px;
   color: #4a5568;
   line-height: 1.6;
   position: relative;
 }
 
-.help-section li::marker {
+.mezclas-view .help-section li::marker {
   color: #ff6b6b;
   font-size: 1.2em;
 }
 
-.help-section li:hover {
+.mezclas-view .help-section li:hover {
   color: #2d3748;
   transform: translateX(5px);
   transition: all 0.3s ease;
 }
 
-.color-swatch {
+.mezclas-view .color-swatch {
   border: 2px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.4s ease;
   border-radius: 10px;
 }
 
-.color-swatch:hover {
+.mezclas-view .color-swatch:hover {
   transform: scale(1.05) rotate(2deg);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* Estados de reacción con animaciones divertidas */
-.reaction-smoke {
+.mezclas-view .reaction-smoke {
   background: linear-gradient(135deg, #ffa62e, #ff8c00);
   color: white;
   animation: shake 0.5s ease-in-out infinite;
 }
 
-.reaction-ignition {
+.mezclas-view .reaction-ignition {
   background: linear-gradient(135deg, #ff00ff, #ff1493, #8a2be2);
   color: white;
   animation: fire 1s ease-in-out infinite;
 }
 
-.reaction-complete {
+.mezclas-view .reaction-complete {
   background: linear-gradient(135deg, #8B4513, #a0522d, #cd853f);
   color: white;
   animation: sparkle 2s ease-in-out infinite;
@@ -448,7 +448,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Mejoras para el estado del matraz */
-.estado-info {
+.mezclas-view .estado-info {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
   border-radius: 15px;
   padding: 15px;
@@ -459,17 +459,17 @@ input[type="range"]::-moz-range-thumb {
 
 /* Responsive */
 @media (max-width: 1200px) {
-  .mezclas-view {
+  .mezclas-view .mezclas-view {
     flex-direction: column;
     padding: 20px;
     gap: 20px;
   }
-  
-  .left-panel, .controls-panel {
+
+  .mezclas-view .left-panel, .mezclas-view .controls-panel {
     width: 100%;
   }
   
-  .card {
+  .mezclas-view .card {
     padding: 18px;
   }
 }
@@ -479,38 +479,38 @@ input[type="range"]::-moz-range-thumb {
     padding: 16px;
   }
   
-  h2 {
+  .mezclas-view h2 {
     font-size: 1.6rem;
   }
   
-  .reagent {
+  .mezclas-view .reagent {
     padding: 12px 14px;
     font-size: 13px;
   }
   
-  button {
+  .mezclas-view button {
     padding: 12px 16px;
     font-size: 14px;
   }
   
-  .matraz-canvas::before {
+  .mezclas-view .matraz-canvas::before {
     font-size: 10px;
     top: -20px;
   }
 }
 
 /* Scrollbar personalizado y divertido */
-.mezclas-view::-webkit-scrollbar {
+.mezclas-view.mezclas-view::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
 
-.mezclas-view::-webkit-scrollbar-track {
+.mezclas-view.mezclas-view::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
 
-.mezclas-view::-webkit-scrollbar-thumb {
+.mezclas-view.mezclas-view::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f);
   border-radius: 10px;
   border: 2px solid rgba(255, 255, 255, 0.8);
@@ -521,7 +521,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Partículas flotantes en el fondo */
-.floating-emoji {
+.mezclas-view .floating-emoji {
   position: fixed;
   font-size: 1.5rem;
   opacity: 0.1;
@@ -539,21 +539,21 @@ input[type="range"]::-moz-range-thumb {
 
 /* Estilos pasta de dientes */
 /* Colores específicos para Pasta de Dientes de Elefante */
-.rA { 
+.mezclas-view .rA { 
   background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
   color: #2c5282;
   border: 2px solid #90cdf4;
   box-shadow: 0 6px 20px rgba(144, 205, 244, 0.4);
 }
 
-.rB { 
+.mezclas-view .rB { 
   background: linear-gradient(135deg, #fffacd, #fff8dc);
   color: #744210;
   border: 2px solid #fcd34d;
   box-shadow: 0 6px 20px rgba(252, 211, 77, 0.4);
 }
 
-.rC { 
+.mezclas-view .rC { 
   background: linear-gradient(135deg, #e6e6fa, #d8bfd8);
   color: #553c9a;
   border: 2px solid #9f7aea;
@@ -561,7 +561,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Estados de reacción para pasta de dientes */
-.reaction-foaming {
+.mezclas-view .reaction-foaming {
   background: linear-gradient(135deg, #ff6b6b, #ffd93d);
   color: white;
   animation: foamPulse 1s ease-in-out infinite;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Modal, Button } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { elements } from "./data/elements";
 import ElementCard from "./components/ElementCard";
 import { useElementInfo } from "./hooks/useElementInfo";
@@ -55,8 +55,9 @@ const PeriodicTableView: React.FC = () => {
       grid[row][col] = el;
     }
   });
+
   return (
-    <Container fluid className="bg-white text-black min-vh-200 py-4">
+    <div className="bg-white text-black min-vh-100 py-4 w-100">
       <h1
         className="text-center mb-4 fw-bold"
         style={{
@@ -111,7 +112,7 @@ const PeriodicTableView: React.FC = () => {
         <Modal.Body className="bg-light text-dark px-4 py-3">
           <div className="bg-white border rounded p-3 mb-3 shadow-sm">
             <h5 className="text-primary fw-semibold mb-3">
-              🔬 Propiedades del elemento
+            Propiedades del elemento
             </h5>
             <p>
               <strong>Masa atómica:</strong> {selected?.masa}
@@ -145,7 +146,7 @@ const PeriodicTableView: React.FC = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
   );
 };
 
