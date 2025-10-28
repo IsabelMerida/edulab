@@ -1,5 +1,5 @@
 import React from 'react';
-import { EstadoMatraz } from '../types';
+import { EstadoMatraz } from './hooks/useSimuladorMatraz';
 
 interface ControlsMatrazProps {
   state: EstadoMatraz;
@@ -37,7 +37,7 @@ const ControlsMatraz: React.FC<ControlsMatrazProps> = ({
           onTouchEnd={onStopPour}
           onClick={() => state.mode === 'drop' && onAddReagent('A')}
         >
-          Verter A
+          Glicerina (A)
         </button>
         <button 
           className="reagent rB"
@@ -47,17 +47,7 @@ const ControlsMatraz: React.FC<ControlsMatrazProps> = ({
           onTouchEnd={onStopPour}
           onClick={() => state.mode === 'drop' && onAddReagent('B')}
         >
-          Verter B
-        </button>
-        <button 
-          className="reagent rC"
-          onMouseDown={() => onStartPour('C')}
-          onMouseUp={onStopPour}
-          onTouchStart={() => onStartPour('C')}
-          onTouchEnd={onStopPour}
-          onClick={() => state.mode === 'drop' && onAddReagent('C')}
-        >
-          Verter C
+          KMnO₄ (B)
         </button>
       </div>
 
@@ -103,6 +93,9 @@ const ControlsMatraz: React.FC<ControlsMatrazProps> = ({
           value={state.temp}
           onChange={(e) => onSetTemp(Number(e.target.value))}
         />
+        <div className="small" style={{ marginTop: '4px', color: '#60a5fa' }}>
+          {state.temp >= 35 ? '✓ Temperatura suficiente para reacción' : '❄ Aumenta temperatura para reacción'}
+        </div>
       </div>
 
       <div style={{ marginTop: '10px' }}>
@@ -124,7 +117,7 @@ const ControlsMatraz: React.FC<ControlsMatrazProps> = ({
           Reiniciar
         </button>
         <button className="reagent danger" onClick={onExplode}>
-          Forzar reacción
+          Forzar ignición
         </button>
       </div>
     </div>

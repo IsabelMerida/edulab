@@ -11,10 +11,11 @@ const MezclasView: React.FC = () => {
   return (
     <div className="mezclas-view">
       <div className="left-panel card">
-        <h2>Matraz interactivo — Simulación</h2>
+        <h2>Reacción: Glicerina + Permanganato de Potasio</h2>
         <p className="small">
-          Añade reactivos (A, B, C). Ajusta la temperatura y la cantidad. 
-          Observa burbujeo, cambio de color y posible reacción fuerte.
+          <strong>Reactivo A:</strong> Glicerina (C₃H₈O₃) - Líquido incoloro, viscoso y dulce<br/>
+          <strong>Reactivo B:</strong> Permanganato de Potasio (KMnO₄) - Solución púrpura intenso<br/>
+          <strong>Reacción:</strong> Mezcla → Retraso (2-5s) → Humo → Ignición espontánea (llama lila) → Residuo marrón
         </p>
         <MatrazDisplay 
           state={simulador.state}
@@ -40,12 +41,13 @@ const MezclasView: React.FC = () => {
         <EstadoMatraz state={simulador.state} />
 
         <div className="card help-section">
-          <strong>Cómo usar</strong>
+          <strong>Instrucciones de la reacción química</strong>
           <ul>
-            <li>Selecciona <em>Agregar gota</em> o <em>Vertido continuo</em>.</li>
-            <li>Pulsa Verter A/B/C para añadir líquido al matraz.</li>
-            <li>Sube temperatura o agitación para acelerar reacciones.</li>
-            <li>Ciertas combinaciones + temperatura producen una reacción intensa (explosión visual).</li>
+            <li>Mezcla Glicerina (A) y Permanganato (B) en proporciones similares</li>
+            <li>La temperatura debe ser ≥35°C para la reacción</li>
+            <li>Observa el retraso de 2-5 segundos antes de que comience</li>
+            <li>Etapas: Humo → Ignición con llama lila → Residuo marrón</li>
+            <li>Productos: K₂CO₃ (carbonato de potasio) + Mn₂O₃ (óxido de manganeso)</li>
           </ul>
         </div>
       </div>
