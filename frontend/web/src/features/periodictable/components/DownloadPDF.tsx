@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { jsPDF } from "jspdf";
-import imageSrc from "../../../assets/image.png";
+const imageSrc = new URL("../../assets/image.png", import.meta.url).href;
 
-const DownloadPDFButton: React.FC = () => {
+function DownloadPDFButton() {
   const handleDownload = async () => {
     const img = new Image();
     img.src = imageSrc;
@@ -44,6 +44,6 @@ const DownloadPDFButton: React.FC = () => {
       </Button>
     </div>
   );
-};
+}
 
 export default DownloadPDFButton;
