@@ -9,12 +9,16 @@ import AppNavbar from "./components/Navbar";
 import WelcomeView from "./features/welcome/WelcomeView";
 import MezclasView from "./features/mixes/MezclasView";
 
+
 // Vistas de la tabla periódica
 import PeriodicTableView from "./features/periodictable/PeriodicTableView";
 import AIChatPanel from "./features/periodictable/components/AIChatPanel";
 import ElectronConfigPanel from "./features/periodictable/components/ElectronConfigPanel";
 import AtomicDataTable from "./features/periodictable/components/AtomicDataTable";
 import DownloadPDFButton from "./features/periodictable/components/DownloadPDF";
+
+// Importar la vista de pasta de dientes (nueva)
+import PastaDientesView from "./features/mixes/PastaDientesView";
 
 function App() {
   return (
@@ -81,6 +85,9 @@ function App() {
 
       {/* Página de mezclas */}
       <Route path="/mezclas" element={<MezclasView />} />
+
+      {/* NUEVA RUTA: Página de pasta de dientes de elefante */}
+      <Route path="/pasta-dientes" element={<PastaDientesView />} />
     </Routes>
   );
 }

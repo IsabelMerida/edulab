@@ -175,7 +175,6 @@ for (let i = 0; i < W; i += 50) {
     ctx.fillStyle = fillStyle;
     ctx.fill();
 
-    // Destellos (solo si no es residuo)
     if (state.reactionStage !== 'complete') {
       ctx.fillStyle = 'rgba(255,255,255,0.06)';
       ctx.beginPath();
