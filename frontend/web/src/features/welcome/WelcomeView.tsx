@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { FaFlask, FaAtom, FaVial, FaBrain } from "react-icons/fa";
+import { FaFlask, FaAtom, FaVial, FaBrain, FaRocket, FaLifeRing, FaPlane, FaPlaneDeparture, FaHeart } from "react-icons/fa";
 
 const WelcomeView: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ const WelcomeView: React.FC = () => {
         </Container>
       </Navbar>
 
-      {/* Contenido centrado ocupando toda la pantalla */}
+      {/* Contenido centrado*/}
       <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center text-center w-100 px-4">
         <h1 className="mb-4 display-4 fw-bold">Bienvenido a EduLab</h1>
         <p className="lead mb-5">
@@ -34,19 +34,13 @@ const WelcomeView: React.FC = () => {
         {/* Botones */}
         <div className="d-flex flex-wrap justify-content-center gap-4">
           <a href="/tabla" className="btn btn-primary btn-lg shadow-sm d-flex align-items-center">
-            <FaAtom className="me-2" /> Tabla Periódica
+            <FaAtom className="me-2" /> Química
           </a>
           <a href="/mezclas" className="btn btn-success btn-lg shadow-sm d-flex align-items-center">
-            <FaFlask className="me-2" /> Mezclas
+            <FaRocket className="me-2" /> Física
           </a>
           <a href="/titulacion" className="btn btn-warning btn-lg shadow-sm d-flex align-items-center text-dark">
-            <FaVial className="me-2" /> Titulación
-          </a>
-          <a href="/fisica" className="btn btn-info btn-lg shadow-sm d-flex align-items-center text-dark">
-            <FaBrain className="me-2" /> Física
-          </a>
-          <a href="/biologia" className="btn btn-secondary btn-lg shadow-sm d-flex align-items-center">
-            <FaBrain className="me-2" /> Biología
+            <FaHeart className="me-2" /> Biología
           </a>
         </div>
       </div>
