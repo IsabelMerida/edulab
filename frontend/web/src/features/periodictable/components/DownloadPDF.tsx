@@ -1,43 +1,39 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { jsPDF } from "jspdf";
-const imageSrc = new URL("../../assets/image.png", import.meta.url).href;
 
 function DownloadPDFButton() {
   const handleDownload = async () => {
-    const img = new Image();
-    img.src = imageSrc;
-    img.crossOrigin = "anonymous";
+    try {
+      const imageSrc = "/assets/image.png";
 
-    img.onload = () => {
+      const response = await fetch(imageSrc);
+      if (!response.ok) throw new Error("No se pudo cargar la imagen");
+
+      const blob = await response.blob();
+      const img = await createImageBitmap(blob);
+
       const canvas = document.createElement("canvas");
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+      canvas.width = img.width;
+      canvas.height = img.height;
       const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        console.error("No se pudo obtener el contexto 2D del canvas.");
-        alert("⚠️ Error al crear el contexto de dibujo para generar el PDF.");
-        return;
-      }
       ctx.drawImage(img, 0, 0);
 
       const imgData = canvas.toDataURL("image/png");
-      const orientation = canvas.width > canvas.height ? "landscape" : "portrait";
+      const orientation = img.width > img.height ? "landscape" : "portrait";
 
       const pdf = new jsPDF({
         orientation,
         unit: "px",
-        format: [canvas.width, canvas.height],
+        format: [img.width, img.height],
       });
 
-      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.addImage(imgData, "PNG", 0, 0, img.width, img.height);
       pdf.save("tabla-periodica.pdf");
-    };
-
-    img.onerror = (err) => {
-      console.error("Error al cargar la imagen:", err);
-      alert("⚠️ No se pudo cargar la imagen. Verifica la ruta o el archivo.");
-    };
+    } catch (error) {
+      console.error("Error al generar el PDF:", error);
+      alert("No se pudo generar el PDF. Verifica la ruta o el archivo.");
+    }
   };
 
   return (
