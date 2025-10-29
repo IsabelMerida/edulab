@@ -7,7 +7,7 @@ export class ChatbotService {
 
   constructor() {
     this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY, // usa variable de entorno
+      apiKey: process.env.OPENAI_API_KEY, 
     });
   }
 
