@@ -1,31 +1,29 @@
-
+// src/features/titulation/components/CanvasArea.jsx
 import React, { useEffect, useRef } from 'react';
 
-// --- Logica y constantes de dibujo ---
-const flask = { x: 700 / 2, y: 320, width: 220, height: 200 };
-
-// CAMBIO: La gama de colores va de AZUL (0) a ROSA (8)
+// --- Constantes y Lógica de Dibujo ---
+const flask = { x: 700 / 2, y: 320, width: 220, height: 200 }; // Matraz más estrecho
 const GAMA_DE_COLORES_RGB = [
-  'rgb(30, 100, 200)',   // 0: Azul Oscuro (Analito inicial)
+  'rgb(30, 100, 200)',   // 0: Azul Oscuro (0.0 mL)
   'rgb(60, 130, 220)',   // 1: Azul Medio
-  'rgb(120, 180, 240)',  // 2: Azul Claro
-  'rgb(200, 200, 250)',  // 3: Azul muy pálido / Lavanda
+  'rgb(120, 180, 240)',  // 2: Azul Claro (3.0 mL)
+  'rgb(200, 200, 250)',  // 3: Azul pálido / Lavanda
   'rgb(249, 168, 212)',  // 4: Rosa Claro (VIRAJJE IDEAL 4.0mL)
-  'rgb(244, 114, 182)',  // 5: Rosa Medio
-  'rgb(236, 72, 153)',   // 6: Rosa Fuerte (Pasado)
+  'rgb(244, 114, 182)',  // 5: Rosa Medio (Pasado)
+  'rgb(236, 72, 153)',   // 6: Rosa Fuerte
   'rgb(220, 60, 150)',   // 7: Rosa muy fuerte
   'rgb(190, 24, 93)'     // 8: Rojo/Rosa (Pasado extremo)
 ];
 
 function getTitrationColor(volume) {
-  // Lógica de color (va de azul a rosa)
+  // Lógica de color (va de azul a rosa, punto clave en 4.0 mL)
   if (volume < 3.0) return GAMA_DE_COLORES_RGB[0]; // Azul Oscuro
   if (volume < 4.0) return GAMA_DE_COLORES_RGB[2]; // Azul Claro
   if (volume < 5.0) return GAMA_DE_COLORES_RGB[4]; // Rosa Claro (Viraje ideal)
   if (volume < 6.0) return GAMA_DE_COLORES_RGB[5]; // Rosa Medio
   if (volume < 7.0) return GAMA_DE_COLORES_RGB[6]; // Rosa Fuerte (Pasado)
   if (volume < 8.0) return GAMA_DE_COLORES_RGB[7];
-  return GAMA_DE_COLORES_RGB[8]; 
+  return GAMA_DE_COLORES_RGB[8];
 }
 
 function drawFlask(ctx, level, current_volume) {
@@ -33,7 +31,7 @@ function drawFlask(ctx, level, current_volume) {
     const W = ctx.canvas.width;
     const H = ctx.canvas.height;
     
-    // Fondo del CANVAS (área de simulación)
+    // CAMBIO: Fondo del CANVAS a BLANCO
     ctx.clearRect(0, 0, W, H);
     const bg = ctx.createLinearGradient(0, 0, 0, H);
     bg.addColorStop(0, '#f0f0f0');

@@ -207,11 +207,6 @@ const PeriodicTableView: React.FC = () => {
               <strong>Período:</strong> {selected?.periodo}
             </p>
           </div>
-
-          <div className="bg-white border rounded p-3 shadow-sm">
-            <h5 className="text-success fw-semibold mb-3">🤖 Tutor IA</h5>
-            <p>{info}</p>
-          </div>
         </Modal.Body>
 
         <Modal.Footer className="bg-light border-0">
