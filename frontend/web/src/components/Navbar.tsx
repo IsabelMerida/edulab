@@ -71,7 +71,7 @@ export default function AppNavbar() {
                 }}
               >
                 <GiAtom size={20} className="me-2 text-teal-400" />
-                Molécula
+                Átomo 3D
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
