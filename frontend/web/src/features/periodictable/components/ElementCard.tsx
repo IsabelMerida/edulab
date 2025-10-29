@@ -29,13 +29,13 @@ const ElementCard: React.FC<Props> = ({
     "no metal": "#FF4C4C",
     "metal alcalino": "#FFA500",
     "metal alcalinotérreo": "#FFD700",
-    metaloide: "#00FFFF",
+    metaloide: "#2D882D",
     halogeno: "#00BFFF",
     "gas noble": "#BF00FF",
     "metal de transicion": "#DA70D6",
     lantanido: "#FF7F50",
     actinido: "#FF1493",
-    metal: "#A9A9A9",
+    metal: "#182CC5",
     "elemento sintetico": "#8A2BE2",
   };
 
@@ -46,7 +46,7 @@ const ElementCard: React.FC<Props> = ({
   const bgColor = tipoColor[tipo] ?? "#6C757D";
   const isSelected = selected?.numero === element.numero;
 
-  // Ocultar elementos vacíos
+  
   if (
     !element ||
     !element.numero ||

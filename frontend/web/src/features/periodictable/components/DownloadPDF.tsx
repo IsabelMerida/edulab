@@ -7,18 +7,23 @@ function DownloadPDFButton() {
   const handleDownload = async () => {
     const img = new Image();
     img.src = imageSrc;
+    img.crossOrigin = "anonymous";
 
     img.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
+      if (!ctx) {
+        console.error("No se pudo obtener el contexto 2D del canvas.");
+        alert("⚠️ Error al crear el contexto de dibujo para generar el PDF.");
+        return;
+      }
       ctx.drawImage(img, 0, 0);
-      const imgData = canvas.toDataURL("image/png");
 
-      const orientation = img.width > img.height ? "landscape" : "portrait";
+      const imgData = canvas.toDataURL("image/png");
+      const orientation = canvas.width > canvas.height ? "landscape" : "portrait";
+
       const pdf = new jsPDF({
         orientation,
         unit: "px",
@@ -29,8 +34,9 @@ function DownloadPDFButton() {
       pdf.save("tabla-periodica.pdf");
     };
 
-    img.onerror = () => {
-      alert("No se pudo cargar la imagen. Revisa la ruta en public/assets/");
+    img.onerror = (err) => {
+      console.error("Error al cargar la imagen:", err);
+      alert("⚠️ No se pudo cargar la imagen. Verifica la ruta o el archivo.");
     };
   };
 
