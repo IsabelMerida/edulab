@@ -4,10 +4,11 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 
 // Componentes globales
 import AppNavbar from "./components/Navbar";
-
 // Vistas principales
 import WelcomeView from "./features/welcome/WelcomeView";
 import MezclasView from "./features/mixes/MezclasView";
+// Asegúrate de que el nombre del componente y la ruta de importación para 'TitulationView' coincidan con el archivo y exportación reales para evitar errores.
+import TitulationView from "./features/titulation/TitulationView";
 
 
 // Vistas de la tabla periódica
@@ -88,6 +89,8 @@ function App() {
 
       {/* NUEVA RUTA: Página de pasta de dientes de elefante */}
       <Route path="/pasta-dientes" element={<PastaDientesView />} />
+      {/* Página de titulación */}
+      <Route path="/titulacion" element={<TitulationView />} />
     </Routes>
   );
 }

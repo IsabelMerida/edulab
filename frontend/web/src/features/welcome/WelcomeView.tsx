@@ -21,6 +21,7 @@ const WelcomeView: React.FC = () => {
               <Nav.Link href="/biologia"><FaBrain className="me-1" /> Biología</Nav.Link>
             </Nav>
           </Navbar.Collapse>
+        
         </Container>
       </Navbar>
 
