@@ -6,10 +6,9 @@ type Props = {
   show: boolean;
   onHide: () => void;
   element: Elemento | null;
-  aiInfo?: string; // opcional con IA
 };
 
-const ElementModal: React.FC<Props> = ({ show, onHide, element, aiInfo }) => {
+const ElementModal: React.FC<Props> = ({ show, onHide, element }) => {
   if (!element) return null;
 
   return (
@@ -58,20 +57,6 @@ const ElementModal: React.FC<Props> = ({ show, onHide, element, aiInfo }) => {
           <p><strong>Grupo:</strong> {element.grupo}</p>
           <p><strong>Período:</strong> {element.periodo}</p>
         </div>
-
-        {aiInfo && (
-          <div
-            style={{
-              backgroundColor: "#44445a",
-              borderRadius: "8px",
-              padding: "1rem",
-              boxShadow: "0 0 6px rgba(0,0,0,0.3)",
-            }}
-          >
-            <h5 className="text-white mb-3">🤖 Tutor IA</h5>
-            <p>{aiInfo}</p>
-          </div>
-        )}
       </Modal.Body>
 
       <Modal.Footer
