@@ -26,7 +26,7 @@ export default function AppNavbar() {
             <BsArrowLeft size={18} />
           </button>
 
-          {/* Marca */}
+          {/* Icono Atomo */}
           <Navbar.Brand
             href="#"
             className="d-flex align-items-center fw-bold fs-5 text-white"
@@ -78,7 +78,6 @@ export default function AppNavbar() {
         </Container>
       </Navbar>
 
-      {/* Vista 3D de Sketchfab */}
       {show3D && (
         <div
           style={{

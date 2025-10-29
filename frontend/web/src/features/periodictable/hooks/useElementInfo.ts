@@ -15,7 +15,7 @@ export function useElementInfo() {
   const [info, setInfo] = useState<string>('');
 
   const generateAIInfo = async (element: Elemento): Promise<void> => {
-    // Más adelante se conectará con OpenAI o Hugging Face
+    // Más adelante se conectará con OpenAI
     const explanation = `El ${element.nombre} (${element.simbolo}) es un ${element.tipo.toLowerCase()} con una masa atómica de ${element.masa}.`;
     setInfo(explanation);
   };

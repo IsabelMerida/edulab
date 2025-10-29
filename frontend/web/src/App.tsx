@@ -7,7 +7,6 @@ import AppNavbar from "./components/Navbar";
 // Vistas principales
 import WelcomeView from "./features/welcome/WelcomeView";
 import MezclasView from "./features/mixes/MezclasView";
-// Asegúrate de que el nombre del componente y la ruta de importación para 'TitulationView' coincidan con el archivo y exportación reales para evitar errores.
 import TitulationView from "./features/titulation/TitulationView";
 
 

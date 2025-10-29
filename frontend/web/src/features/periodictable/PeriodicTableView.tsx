@@ -28,7 +28,6 @@ const PeriodicTableView: React.FC = () => {
 
   const handleClose = (): void => setShowModal(false);
 
-  // Matriz 10x18
   const grid: (Elemento | null | undefined)[][] = Array.from(
     { length: 9 },
     () => Array(18).fill(null)
@@ -36,7 +35,7 @@ const PeriodicTableView: React.FC = () => {
 
   elements.sort((a, b) => a.numero - b.numero);
 
-  //Mapeo automático de los Periodos 1 al 5 (índices de fila 0 a 4)
+  //Periodos 1 al 5 (índices de fila 0 a 4)
   elements.forEach((el) => {
     const { grupo, periodo } = el;
     if (periodo <= 5) {
@@ -47,7 +46,6 @@ const PeriodicTableView: React.FC = () => {
     }
   });
 
-  // Colocación manual de los elementos del Periodo 6 y 7
   //Función de utilidad para encontrar un elemento por su número atómico (Z)
   const findEl = (Z: number) => elements.find((e) => e.numero === Z);
 
