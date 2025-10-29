@@ -46,7 +46,6 @@ const ElementCard: React.FC<Props> = ({
   const bgColor = tipoColor[tipo] ?? "#6C757D";
   const isSelected = selected?.numero === element.numero;
 
-  
   if (
     !element ||
     !element.numero ||
@@ -67,22 +66,57 @@ const ElementCard: React.FC<Props> = ({
         transition: "transform 0.2s ease-in-out",
         zIndex: isSelected ? 10 : 1,
         cursor: "pointer",
-        borderRadius: "4px",
+        borderRadius: "6px",
         border: "1px solid rgba(255,255,255,0.2)",
-        boxShadow: isSelected ? "0 0 10px rgba(255,255,255,0.5)" : "none",
+        boxShadow: isSelected ? "0 0 10px rgba(255,255,255,0.6)" : "none",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
         ...style,
       }}
       onClick={() => onSelect(element)}
-      className="text-center"
     >
-      <Card.Body className="p-1 d-flex flex-column justify-content-center align-items-center">
-        <div className="fw-bold" style={{ fontSize: "clamp(9px, 1vw, 11px)" }}>
+      <Card.Body
+        className="p-0 d-flex flex-column justify-content-center align-items-center"
+        style={{
+          lineHeight: 1.1,
+        }}
+      >
+        {/* Número atómico */}
+        <div
+          className="fw-bold"
+          style={{
+            fontSize: "11px",
+            marginBottom: "2px",
+            textShadow: "0 0 2px rgba(0,0,0,0.3)",
+          }}
+        >
           {element.numero}
         </div>
-        <div style={{ fontSize: "clamp(16px, 2vw, 20px)", fontWeight: 600 }}>
+
+        {/* Símbolo */}
+        <div
+          style={{
+            fontSize: "20px",
+            fontWeight: 700,
+            lineHeight: 1,
+            textShadow: "0 0 3px rgba(0,0,0,0.4)",
+          }}
+        >
           {element.simbolo}
         </div>
-        <div style={{ fontSize: "clamp(8px, 1vw, 10px)", textAlign: "center" }}>
+
+        {/* Nombre */}
+        <div
+          style={{
+            fontSize: "9px",
+            marginTop: "2px",
+            textAlign: "center",
+            opacity: 0.9,
+            lineHeight: 1,
+          }}
+        >
           {element.nombre}
         </div>
       </Card.Body>
