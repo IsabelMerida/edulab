@@ -9,7 +9,6 @@ import WelcomeView from "./features/welcome/WelcomeView";
 import MezclasView from "./features/mixes/MezclasView";
 import TitulationView from "./features/titulation/TitulationView";
 
-
 // Vistas de la tabla periódica
 import PeriodicTableView from "./features/periodictable/PeriodicTableView";
 import AIChatPanel from "./features/periodictable/components/AIChatPanel";
@@ -35,7 +34,7 @@ function App() {
 
             <Container fluid className="mt-4">
               {/* Botón descarga */}
-              <div className="d-flex justify-content-center mb-3">
+              <div style={{ marginTop: "-10px", marginBottom: "1rem" }}>
                 <DownloadPDFButton />
               </div>
 

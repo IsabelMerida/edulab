@@ -8,10 +8,10 @@ export default function AppNavbar() {
   const [show3D, setShow3D] = useState(false);
 
   return (
-    <>
+    <> {/* Nav Tabla Periodica */}
       <Navbar
         expand="lg"
-        bg="primary"
+        bg="dark"
         variant="dark"
         className="shadow-sm py-1"
         style={{ height: "70px", overflow: "hidden" }}
