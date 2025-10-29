@@ -573,3 +573,72 @@
   50% { transform: scale(1.05); }
 }
 
+/* Contenedor principal */
+.mezclas-main-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Izquierda más ancha */
+  gap: 30px;
+  align-items: start;
+}
+
+/* Panel izquierdo con matraz y chat */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Chat en el lado izquierdo */
+.chat-left-section {
+  width: 100%;
+}
+
+.chat-left-section .chat-container {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  width: 100%;
+}
+
+/* Panel derecho solo con controles e instrucciones */
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilos existentes que mantienes */
+.mezclas-view {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e8ed;
+}
+
+.help-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e8ed;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .mezclas-main-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
