@@ -12,9 +12,23 @@ import { GiAtom } from "react-icons/gi";
 
 const WelcomeView: React.FC = () => {
   return (
-    <div className="bg-light min-vh-100 d-flex flex-column">
-      {/* Navbar fija */}
-      <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
+    <div
+      className="bg-light d-flex flex-column"
+      style={{
+        width: "100vw",
+        minHeight: "100vh",
+        overflowX: "hidden", 
+        boxSizing: "border-box",
+      }}
+    >
+      {/* Navbar  */}
+      <Navbar
+        bg="dark"
+        variant="dark"
+        expand="lg"
+        fixed="top"
+        className="shadow"
+      >
         <Container>
           <Navbar.Brand href="/" className="fw-bold d-flex align-items-center">
             <GiAtom
@@ -28,13 +42,22 @@ const WelcomeView: React.FC = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="/tabla" className="d-flex align-items-center gap-2">
+              <Nav.Link
+                href="/tabla"
+                className="d-flex align-items-center gap-2"
+              >
                 <FaAtom /> Tabla Periódica
               </Nav.Link>
-              <Nav.Link href="/mezclas" className="d-flex align-items-center gap-2">
+              <Nav.Link
+                href="/mezclas"
+                className="d-flex align-items-center gap-2"
+              >
                 <FaFlask /> Mezclas
               </Nav.Link>
-              <Nav.Link href="/titulacion" className="d-flex align-items-center gap-2">
+              <Nav.Link
+                href="/titulacion"
+                className="d-flex align-items-center gap-2"
+              >
                 <FaVial /> Titulación
               </Nav.Link>
             </Nav>
@@ -43,14 +66,20 @@ const WelcomeView: React.FC = () => {
       </Navbar>
 
       {/* Contenido principal */}
-      <main className="flex-grow-1 h-100 d-flex flex-column justify-content-center align-items-center text-center w-100 px-4 pt-5 mt-4">
-        <h1 className="mb-4 display-4 fw-bold">Bienvenido a EduLab</h1>
-        <p className="lead mb-5">
-          Explora simulaciones de química, física y biología de manera interactiva.
-        </p>
 
-        {/* Botones */}
-        <div className="d-flex flex-wrap justify-content-center gap-4 mb-5 w-100">
+      <main
+        className="flex-grow-1 d-flex flex-column justify-content-center align-items-center w-100"
+        style={{ paddingTop: "80px", paddingBottom: "72px" }}
+      >
+        <div className="container-fluid text-center px-4">
+          <h1 className="mb-4 display-4 fw-bold">Bienvenido a EduLab</h1>
+          <p className="lead mb-5">
+            Explora simulaciones de química, física y biología de manera
+            interactiva.
+          </p>
+        </div>
+
+        <div className="d-flex flex-wrap justify-content-center gap-4 px-4 mb-5 w-100">
           <a
             href="/tabla"
             className="btn btn-primary btn-lg shadow-sm d-flex align-items-center gap-2"
@@ -72,11 +101,12 @@ const WelcomeView: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer fijo */}
+      {/* Footer */}
       <footer className="bg-dark text-light text-center py-3 fixed-bottom w-100 shadow-sm">
         <Container>
           <small>
-            © {new Date().getFullYear()} EduLab. Todos los derechos reservados.
+            © {new Date().getFullYear()} The 404s. Todos los derechos
+            reservados.
           </small>
         </Container>
       </footer>
