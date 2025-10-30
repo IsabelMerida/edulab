@@ -1,13 +1,16 @@
-// src/features/titulation/TitulacionView.jsx
 'use client'; 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Navbar, Nav, Container } from "react-bootstrap";
+// ¡CORRECCIÓN CRÍTICA DE IMPORTACIÓN DE ICONOS!
+import { FaFlask, FaAtom, FaVial } from "react-icons/fa"; // Importa los iconos de FA
+import { GiAtom } from "react-icons/gi"; // Importa los iconos de GI
 import CanvasArea from './components/CanvasArea';
 import ControlPanel from './components/ControlPanel';
 
-// (Constantes que definen la simulación)
+// (Constantes fijas para el juego)
 const VOLUMEN_INICIAL_ANALITO = 10.0;
 const MAX_VOLUME_DISPLAY = 50.0;
-const DROP_SIZE_ML = 1.0;
+const DROP_SIZE_ML = 0.2; // Avance pequeño
 const TARGET_VOLUME = 4.0;
 const VOLUME_DEACTIVATION_LIMIT = 7.0;
 
@@ -24,41 +27,51 @@ export default function TitulacionView({ onClose }) {
   const [gameStarted, setGameStarted] = useState(false);
 
   // --- Funciones de Lógica ---
-  function handleStart(tipo) {
+  
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); 
+
+  const handleAddDrop = useCallback(() => {
+    if (!gameStarted || isLoading) return; 
+
+    const newVolume = Math.round((currentVolume + DROP_SIZE_ML) * 10) / 10;
+    
+    if (newVolume > VOLUME_DEACTIVATION_LIMIT) {
+        setPouring(false);
+        setMessage(`Simulación terminada. Usaste ${newVolume.toFixed(1)} mL.`);
+        setGameStarted(false);
+        return;
+    }
+
+    const totalVisualVolume = VOLUMEN_INICIAL_ANALITO + newVolume;
+    setLevel(Math.min(100, (totalVisualVolume / MAX_VOLUME_DISPLAY) * 100));
+    setCurrentVolume(newVolume);
+
+    if (newVolume === TARGET_VOLUME) {
+        setMessage(`¡PUNTO DE VIRAJE! Usaste ${newVolume.toFixed(1)} mL.`);
+    } else if (newVolume > TARGET_VOLUME && newVolume <= (TARGET_VOLUME + 1.0)) {
+         setMessage(`¡Viraje Ideal! El color es estable.`);
+    } else if (newVolume > (TARGET_VOLUME + 1.0)) {
+        setMessage(`¡Viraje Pasado! El color es muy fuerte.`);
+    } else {
+        setMessage(`Volumen: ${newVolume.toFixed(1)} mL`);
+    }
+    setStaticStateMsg("");
+  }, [gameStarted, isLoading, currentVolume]); 
+
+  // handleStart asíncrono para sincronización de botones
+  const handleStart = useCallback(async (tipo) => {
+    setIsLoading(true); 
+    setGameStarted(false); 
+    resetVisuals(`Iniciando titulación de ${tipo}...`);
+
+    await delay(100); 
+
     setGameStarted(true);
-    console.log(`SIMULACIÓN INICIADA: ${tipo}`);
     resetVisuals(`Titulación iniciada. ¡Comienza a gotear!`);
-  }
+    setIsLoading(false); 
+  }, [setIsLoading, setGameStarted, resetVisuals]);
 
-  function handleAddDrop() {
-      if (!gameStarted || isLoading) return; 
-      const newVolume = Math.round((currentVolume + DROP_SIZE_ML) * 10) / 10;
-      
-      if (newVolume > VOLUME_DEACTIVATION_LIMIT) {
-          setPouring(false);
-          setMessage(`Simulación terminada. Usaste ${newVolume.toFixed(1)} mL.`);
-          setGameStarted(false);
-          return;
-      }
-
-      const totalVisualVolume = VOLUMEN_INICIAL_ANALITO + newVolume;
-      setLevel(Math.min(100, (totalVisualVolume / MAX_VOLUME_DISPLAY) * 100));
-      setCurrentVolume(newVolume);
-
-      const TARGET_VOLUME = 4.0;
-      if (newVolume === TARGET_VOLUME) {
-          setMessage(`¡PUNTO DE VIRAJE! Usaste ${newVolume.toFixed(1)} mL.`);
-      } else if (newVolume > TARGET_VOLUME && newVolume <= (TARGET_VOLUME + 1.0)) {
-           setMessage(`¡Viraje Ideal! El color es estable.`);
-      } else if (newVolume > (TARGET_VOLUME + 1.0)) {
-          setMessage(`¡Viraje Pasado! El color es muy fuerte.`);
-      } else {
-          setMessage(`Volumen: ${newVolume.toFixed(1)} mL`);
-      }
-      setStaticStateMsg("");
-  }
-
-  async function handleAskAI() {
+  const handleAskAI = useCallback(async () => {
     if (isLoading) return;
     setIsLoading(true); setAiResponse("Consultando..."); setStaticStateMsg("");
     try {
@@ -69,10 +82,10 @@ export default function TitulacionView({ onClose }) {
       setAiResponse(data.explicacion);
     } catch (error) { console.error("Error con IA:", error); setAiResponse(`Error al conectar con la IA. (${error.message})`); }
     setIsLoading(false);
-  }
+  }, [isLoading, setAiResponse, setStaticStateMsg, setIsLoading]);
 
   function handleCheckState() {
-     setStaticStateMsg("Analito: 10.0 mL (desconocido). Titulante: 0.1M (estándar).");
+     setStaticStateMsg("Analito: 10.0 mL Acido clorhídrico. Titulante: 0.1M NaOH.");
      setMessage("");
   }
 
@@ -81,7 +94,7 @@ export default function TitulacionView({ onClose }) {
     resetVisuals("Selecciona un experimento");
   }
 
-  function resetVisuals(msg) {
+  function resetVisuals(msg: string) {
     setLevel((VOLUMEN_INICIAL_ANALITO / MAX_VOLUME_DISPLAY) * 100);
     setCurrentVolume(0.0);
     setMessage(msg || "Listo para titular");
@@ -93,63 +106,104 @@ export default function TitulacionView({ onClose }) {
 
   // --- useEffect para manejar el modo 'stream' (chorro continuo) ---
   useEffect(() => {
-    let intervalId = null;
-    if (pouring && mode === 'stream' && !isLoading && gameStarted) { 
-      handleAddDrop();
-      intervalId = setInterval(handleAddDrop, 200);
+    let intervalId: NodeJS.Timeout | null = null;
+    
+    // Si el modo es 'stream' y 'pouring' es true, inicia el bucle.
+    if (mode === 'stream' && pouring && !isLoading && gameStarted) { 
+      // Llamada inicial inmediata
+      handleAddDrop(); 
+      // El intervalo se encarga del resto
+      intervalId = setInterval(handleAddDrop, 100); 
     }
+    
     return () => {
+      // Limpieza: Detiene el intervalo cuando el usuario suelta el botón o el juego termina
       if (intervalId) clearInterval(intervalId); 
     };
-  }, [pouring, mode, isLoading, gameStarted]); 
+  // Dependencias clave: ahora debe incluir handleAddDrop porque ya no es estable.
+  }, [mode, pouring, isLoading, gameStarted, handleAddDrop]); 
 
-  // --- RENDERIZADO (Usa los sub-componentes) ---
+  // --- RENDERIZADO (Usa el layout de página completa) ---
   return (
-    <div className="absolute top-0 left-0 w-full h-full p-4 md:p-10 bg-blue-950 bg-opacity-90 z-40 flex justify-center items-center backdrop-blur-sm">
-      {/* Contenedor que agrupa las dos columnas: SOLUCIÓN DEL LAYOUT */}
-      <div style={{
-          display: 'grid',
-          // [Canvas (Ocupa el espacio restante) | Controles (Fijo en 360px)]
-          gridTemplateColumns: '1fr 360px', 
-          gap: '32px', 
-          padding: '32px',
-          maxWidth: '1150px', // Límite de ancho total
-          width: '100%',
-          alignItems: 'start', // Alinea los elementos a la parte superior
-      }}>
+    // CONTENEDOR PRINCIPAL: Flexbox vertical de alto 100vh
+    <div
+      className="bg-light d-flex flex-column w-100" // Añadimos w-100 para Bootstrap
+      style={{
+        minHeight: "100vh",
+        overflowX: "hidden", 
+        // overflowY: "auto", <--- No es necesario aquí, lo manejamos en main
+      }}
+    >
+      {/* 1. Navbar FIJA */}
+      <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
+        <Container>
+          <Navbar.Brand href="/" className="fw-bold d-flex align-items-center">
+            <GiAtom size={55} strokeWidth={2} color="#00FFFF" style={{ marginRight: "10px" }} />
+            EduLab
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Nav.Link href="/tabla" className="d-flex align-items-center gap-2"><FaAtom /> Tabla Periódica</Nav.Link>
+              <Nav.Link href="/mezclas" className="d-flex align-items-center gap-2"><FaFlask /> Mezclas</Nav.Link>
+              <Nav.Link href="/titulation" className="d-flex align-items-center gap-2"><FaVial /> Titulación</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-        <CanvasArea
-          level={level}
-          currentVolume={currentVolume}
-        />
+      {/* 2. Contenido principal (Simulador) */}
+      <main 
+        // CLAVE: El contenido central ocupa el espacio restante (flex-grow-1)
+        // Y maneja el scroll interno con overflowY: auto
+        className="flex-grow-1 d-flex justify-content-center align-items-start"
+        style={{ marginTop: "56px", paddingBottom: "56px", overflowY: "auto" }} 
+      >
 
-        <ControlPanel
-          isLoading={isLoading}
-          mode={mode}
-          currentVolume={currentVolume}
-          message={message}
-          staticState={staticStateMsg}
-          aiResponse={aiResponse}
-          gameStarted={gameStarted}
-          onStart={handleStart}
-          onSetMode={setMode}
-          onPourMouseDown={() => setPouring(true)}
-          onPourMouseUp={() => setPouring(false)}
-          onPourMouseLeave={() => setPouring(false)}
-          onPourClick={() => (mode === 'drop' ? handleAddDrop() : null)}
-          onReset={resetAll}
-          onAskAI={handleAskAI}
-          onCheckState={handleCheckState}
-        />
-      </div>
+        {/* Contenedor Grid del Simulador (ya con las dos columnas) */}
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 360px', 
+            gap: '32px', 
+            padding: '32px',
+            maxWidth: '1150px', 
+            width: '100%',
+            alignItems: 'start',
+            // Aseguramos que este contenedor principal no se estire innecesariamente
+            flexShrink: 0 
+        }}>
 
-       <button
-         onClick={onClose}
-         className="absolute top-4 right-6 text-3xl font-bold text-white hover:text-gray-400 z-50 transition-colors"
-         aria-label="Cerrar"
-       >
-         &times;
-       </button>
+          <CanvasArea level={level} currentVolume={currentVolume} />
+
+          <ControlPanel
+            isLoading={isLoading} mode={mode} currentVolume={currentVolume} message={message}
+            staticState={staticStateMsg} aiResponse={aiResponse} gameStarted={gameStarted}
+            onStart={handleStart} onSetMode={setMode}
+            // ¡CORRECCIÓN FINAL DE GOTEOS!
+            // Si el modo es 'stream', activa el pouring (chorro).
+            // Si el modo es 'drop', llama a handleAddDrop (goteo único).
+            onPourMouseDown={() => (mode === 'stream' ? setPouring(true) : handleAddDrop())} 
+            onPourMouseUp={() => setPouring(false)}
+            onPourMouseLeave={() => setPouring(false)}
+            // Ya no es necesario el onPourClick del botón principal
+            onReset={resetAll} onAskAI={handleAskAI} onCheckState={handleCheckState}
+          />
+        </div>
+      </main>
+
+      {/* 3. Footer FIJO */}
+      <footer 
+        // CLAVE: La clase fixed-bottom asegura que se quede abajo
+        className="bg-dark text-light text-center py-3 fixed-bottom w-100 shadow-sm"
+        style={{ height: '56px' }} // Altura fija del footer
+      >
+        <Container>
+          <small>© {new Date().getFullYear()} The 404s. Todos los derechos reservados.</small>
+        </Container>
+      </footer>
     </div>
   );
 }
+// src/features/titulation/components/ControlPanel.jsx (Tarjeta de Bureta)
+
+
