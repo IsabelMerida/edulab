@@ -134,7 +134,7 @@ const MezclasView: React.FC = () => {
           </div>
         </div>
       </div>
-      <footer className="bg-dark text-light text-center fixed-bottom py-3 w-100 shadow-sm">
+      <footer className="bg-dark text-light text-center py-3 w-100 shadow-sm">
         <Container>
           <small>
             © {new Date().getFullYear()} The 404s. Todos los derechos reservados.
