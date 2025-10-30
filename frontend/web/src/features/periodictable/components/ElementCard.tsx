@@ -19,31 +19,33 @@ type Props = {
   style?: React.CSSProperties;
 };
 
+const tipoColor: Record<string, string> = {
+  "no metal": "#ff9b28",
+  "metal alcalino": "#5170ff",
+  "metal alcalinoterreo": "#ff3131",
+  "metaloide": "#9f7cef",
+  "halogeno": "#009cde",
+  "gas noble": "#1E4D8F",
+  "metal de transicion": "#7B1FA2",
+  "lantanido": "#52d0df",
+  "actinido": "#FF1493",
+  "metal": "#308065",
+  "elemento sintetico": "#5FAF89",
+};
+
 const ElementCard: React.FC<Props> = ({
   element,
   onSelect,
   selected,
   style,
 }) => {
-  const tipoColor: Record<string, string> = {
-    "no metal": "#FF4C4C",
-    "metal alcalino": "#FFA500",
-    "metal alcalinotérreo": "#FFD700",
-    metaloide: "#2D882D",
-    halogeno: "#00BFFF",
-    "gas noble": "#BF00FF",
-    "metal de transicion": "#DA70D6",
-    lantanido: "#FF7F50",
-    actinido: "#FF1493",
-    metal: "#182CC5",
-    "elemento sintetico": "#8A2BE2",
-  };
-
-  const tipo = element.tipo
+  
+  const tipoNormalizado = element.tipo
     ?.normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
-  const bgColor = tipoColor[tipo] ?? "#6C757D";
+
+  const bgColor = tipoColor[tipoNormalizado] ?? "#6C757D"; // Gris si no se encuentra
   const isSelected = selected?.numero === element.numero;
 
   if (
@@ -79,11 +81,8 @@ const ElementCard: React.FC<Props> = ({
     >
       <Card.Body
         className="p-0 d-flex flex-column justify-content-center align-items-center"
-        style={{
-          lineHeight: 1.1,
-        }}
+        style={{ lineHeight: 1.1 }}
       >
-        {/* Número atómico */}
         <div
           className="fw-bold"
           style={{
@@ -94,8 +93,6 @@ const ElementCard: React.FC<Props> = ({
         >
           {element.numero}
         </div>
-
-        {/* Símbolo */}
         <div
           style={{
             fontSize: "20px",
@@ -106,8 +103,6 @@ const ElementCard: React.FC<Props> = ({
         >
           {element.simbolo}
         </div>
-
-        {/* Nombre */}
         <div
           style={{
             fontSize: "9px",
