@@ -18,16 +18,18 @@ type Elemento = {
 
 const PeriodicTableView: React.FC = () => {
   const [selected, setSelected] = useState<Elemento | undefined>(undefined);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false); // Modal imagen
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false); // Modal info elemento
   const { generateAIInfo } = useElementInfo();
 
   const handleSelect = (el: Elemento): void => {
     setSelected(el);
     generateAIInfo(el);
-    setShowModal(true);
+    setShowInfoModal(true); // Abre modal de propiedades
   };
 
   const handleClose = (): void => setShowModal(false);
+  const handleCloseInfo = (): void => setShowInfoModal(false);
 
   const grid: (Elemento | null | undefined)[][] = Array.from(
     { length: 9 },
@@ -69,7 +71,6 @@ const PeriodicTableView: React.FC = () => {
     periodo: 0,
   } as Elemento;
 
-  // Marcador rosa con emoji y texto "Clici" (fila 2, columna 4)
   const marcadorImagen = {
     numero: -1,
     simbolo: "👆",
@@ -136,19 +137,7 @@ const PeriodicTableView: React.FC = () => {
 
   return (
     <div className="bg-white text-black min-vh-100 py-4 w-100">
-      <h1
-        className="text-center mb-4 fw-bold"
-        style={{
-          fontFamily: "Arial, sans-serif",
-          background: "#000000",
-          fontSize: "2.5rem",
-          textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
-          letterSpacing: "2px",
-        }}
-      >
-        TABLA PERIÓDICA INTERACTIVA
-      </h1>
-
+      
       <div className="d-flex flex-column align-items-center overflow-auto px-3">
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="d-flex mb-2">
@@ -181,7 +170,10 @@ const PeriodicTableView: React.FC = () => {
                         fontWeight: "bold",
                         cursor: "pointer",
                       }}
-                      onClick={() => handleSelect(el)}
+                      onClick={() => {
+                        setSelected(el);
+                        setShowModal(true);
+                      }}
                     >
                       <span style={{ fontSize: "1.2rem" }}>👆</span>
                       <span style={{ fontSize: "0.8rem" }}>Da click</span>
@@ -200,7 +192,7 @@ const PeriodicTableView: React.FC = () => {
         ))}
       </div>
 
-      {/* Modal grande solo con imagen */}
+      {/* Modal imagen */}
       <Modal show={showModal} onHide={handleClose} centered size="lg">
         <Modal.Body
           className="bg-white d-flex justify-content-center align-items-center"
@@ -225,6 +217,48 @@ const PeriodicTableView: React.FC = () => {
           className="bg-light border-0 d-flex justify-content-center"
         >
           <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal info elemento */}
+      <Modal show={showInfoModal} onHide={handleCloseInfo} centered>
+        <Modal.Header closeButton className="bg-primary text-white border-0">
+          <Modal.Title>
+            <span className="fs-4 fw-bold">{selected?.simbolo}</span>{" "}
+            <span className="fs-6 opacity-75">{selected?.nombre}</span>
+          </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body className="bg-light text-dark px-4 py-3">
+          <div className="bg-white border rounded p-3 mb-3 shadow-sm">
+            <h5 className="text-primary fw-semibold mb-3">
+              Propiedades del elemento
+            </h5>
+            <p>
+              <strong>Masa atómica:</strong> {selected?.masa}
+            </p>
+            <p>
+              <strong>Número atómico:</strong> {selected?.numero}
+            </p>
+            <p>
+              <strong>Configuración electrónica:</strong> {selected?.electrones}
+            </p>
+            <p>
+              <strong>Tipo:</strong> {selected?.tipo}
+            </p>
+            <p>
+              <strong>Grupo:</strong> {selected?.grupo}
+            </p>
+            <p>
+              <strong>Período:</strong> {selected?.periodo}
+            </p>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer className="bg-light border-0">
+          <Button variant="primary" onClick={handleCloseInfo}>
             Cerrar
           </Button>
         </Modal.Footer>

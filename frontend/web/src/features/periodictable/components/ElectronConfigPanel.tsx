@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import type { ChangeEvent } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { elements } from "../data/elements";
@@ -44,14 +44,19 @@ const ElectronConfigPanel: React.FC = () => {
   };
 
   return (
-    <Card className="mb-4 shadow-sm border-0">
+    <Card className="mb-1 shadow-sm border-0">
       <Card.Header
-        className="fw-semibold text-white"
+        className="fw-semibold text-white text-center"
         style={{
           background: "linear-gradient(90deg, #7e5bef, #c084fc)",
+          fontSize: "1.1rem",
+          padding: "0.25rem 0",
+          margin: 0,
+          borderTopLeftRadius: "8px",
+          borderTopRightRadius: "8px", 
         }}
       >
-        ⚛ Configuración electrónica
+      Configuración electrónica
       </Card.Header>
 
       <Card.Body style={{ backgroundColor: "#f5f0ff" }}>
@@ -78,7 +83,11 @@ const ElectronConfigPanel: React.FC = () => {
           </Button>
         </div>
 
-        {elementName && <p className="fw-semibold">Elemento: {elementName} ({symbol})</p>}
+        {elementName && (
+          <p className="fw-semibold">
+            Elemento: {elementName} ({symbol})
+          </p>
+        )}
 
         {error && <Alert variant="danger">{error}</Alert>}
 
@@ -124,7 +133,9 @@ function generateElectronConfig(atomicNumber: number): string {
   for (const { orbital, max } of orbitalOrder) {
     if (remaining <= 0) break;
     const electrons = Math.min(remaining, max);
-    result += `• ${orbital} → ${electrons} electron${electrons > 1 ? "es" : ""}\n`;
+    result += `• ${orbital} → ${electrons} electron${
+      electrons > 1 ? "es" : ""
+    }\n`;
     remaining -= electrons;
   }
 

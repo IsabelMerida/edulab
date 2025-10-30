@@ -52,8 +52,8 @@ function App() {
                 }}
               >
                 <Card.Header
-                  className="text-center fw-bold"
-                  style={{ backgroundColor: "#e9ecef", fontSize: "16px" }}
+                  className="text-center fw-bold text-white bg-dark"
+                  style={{ fontSize: "16px" }}
                 >
                   TABLA PERIÓDICA INTERACTIVA
                 </Card.Header>
