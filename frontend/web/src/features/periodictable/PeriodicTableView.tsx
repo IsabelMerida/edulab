@@ -184,7 +184,7 @@ const PeriodicTableView: React.FC = () => {
                       onClick={() => handleSelect(el)}
                     >
                       <span style={{ fontSize: "1.2rem" }}>👆</span>
-                      <span style={{ fontSize: "0.8rem" }}>Clici</span>
+                      <span style={{ fontSize: "0.8rem" }}>Da click</span>
                     </div>
                   ) : (
                     <ElementCard
