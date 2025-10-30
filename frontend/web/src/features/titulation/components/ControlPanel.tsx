@@ -22,21 +22,19 @@ export default function ControlPanel({
   const isInteractionDisabled = isLoading || !gameStarted;
   
   const CustomControlCard = ({ title, children }) => (
-      // CLAVE: Usamos el CustomControlCard simplificado
-      <div style={{ ...cardBgStyle, padding: '8px 12px', borderRadius: '10px', marginBottom: '8px' }}> {/* REDUCCIÓN AQUÍ: padding: 8px 12px; marginBottom: 8px */}
-          {title && <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', color: '#000' }}>{title}</h4>} {/* REDUCCIÓN AQUÍ: margin: 0 0 6px 0 */}
+      <div style={{ ...cardBgStyle, padding: '8px 12px', borderRadius: '10px', marginBottom: '8px' }}> 
+          {title && <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', color: '#000' }}>{title}</h4>} 
           {children}
       </div>
   );
 
   return (
-    // CLAVE: Reducimos el GAP vertical entre las tarjetas
-    <div style={{ width: '360px', display: 'flex', flexDirection: 'column', gap: '6px', color: '#333' }}> {/* REDUCCIÓN AQUÍ: gap: 6px */}
+    <div style={{ width: '360px', display: 'flex', flexDirection: 'column', gap: '6px', color: '#333' }}> 
 
       {/* Tarjeta de Inicio */}
       <CustomControlCard>
         <label style={smallTextStyle}>Iniciar nuevo experimento:</label>
-        <div style={{ ...rowStyle, marginTop: '4px' }}> {/* REDUCCIÓN AQUÍ: marginTop: 4px */}
+        <div style={{ ...rowStyle, marginTop: '4px' }}>
           <button onClick={() => onStart('acido')} disabled={isLoading} style={{ ...reagentStyle, ...btnAcidStyle, ...(isLoading ? disabledStyle : {}) }}>
             Iniciar Ácido/Base
           </button>
@@ -46,7 +44,7 @@ export default function ControlPanel({
       {/* Tarjeta de Bureta */}
       <CustomControlCard>
         <label style={smallTextStyle}>Control de la Bureta (Fijo: 1mL por acción)</label>
-        <div style={{ ...rowStyle, marginTop: '4px' }}> {/* REDUCCIÓN AQUÍ: marginTop: 4px */}
+        <div style={{ ...rowStyle, marginTop: '4px' }}>
           <button onClick={() => onSetMode('drop')} disabled={isInteractionDisabled} style={{ ...reagentStyle, ...btnDefaultStyle, opacity: mode === 'drop' ? 1 : 0.6, ...(isInteractionDisabled ? disabledStyle : {}) }}>
             Goteo (1 clic)
           </button>
@@ -54,9 +52,22 @@ export default function ControlPanel({
             Chorro (sostener)
           </button>
         </div>
-        <div style={{ marginTop: '6px' }}> {/* REDUCCIÓN AQUÍ: marginTop: 6px */}
+        <div style={{ marginTop: '6px' }}>
           <button
-            onMouseDown={onPourMouseDown} onMouseUp={onPourMouseUp} onMouseLeave={onPourMouseLeave} onClick={onPourClick}
+            // El evento onMouseDown activa el CHORRO
+            onMouseDown={onPourMouseDown} 
+            onMouseUp={onPourMouseUp} 
+            onMouseLeave={onPourMouseLeave} 
+            
+            // ¡CORRECCIÓN FINAL! 
+            // El evento onClick dispara el Goteo (drop) una sola vez
+            onClick={() => {
+                // Solo llama a la función si el modo es 'drop'
+                if (mode === 'drop') {
+                    onPourClick(); // onPourClick es handleAddDrop
+                }
+            }}
+            
             disabled={isInteractionDisabled}
             style={{ ...reagentStyle, ...btnActionStyle, width: '100%', ...(isInteractionDisabled ? disabledStyle : {}) }}
           >
@@ -69,14 +80,14 @@ export default function ControlPanel({
       <CustomControlCard title="Estado del Matraz">
         <div style={smallTextStyle}>Volumen añadido: {currentVolume.toFixed(1)} mL</div>
         
-        <button onClick={onCheckState} disabled={isLoading} style={{ ...reagentStyle, ...btnDefaultStyle, width: '100%', marginTop: '4px', ...(isLoading ? disabledStyle : {}) }}> {/* REDUCCIÓN AQUÍ: marginTop: 4px */}
+        <button onClick={onCheckState} disabled={isLoading} style={{ ...reagentStyle, ...btnDefaultStyle, width: '100%', marginTop: '4px', ...(isLoading ? disabledStyle : {}) }}>
           Comprobar estado
         </button>
         
-        <p style={{ ...smallTextStyle, color: '#000', marginTop: '3px', fontWeight: 'bold', minHeight: '18px' }}>{staticState}</p> {/* REDUCCIÓN AQUÍ: marginTop: 3px; minHeight: 18px */}
-        <p style={{ ...smallTextStyle, color: '#000', marginTop: '3px', fontWeight: 'bold', minHeight: '18px' }}>{message}</p> {/* REDUCCIÓN AQUÍ: marginTop: 3px; minHeight: 18px */}
+        <p style={{ ...smallTextStyle, color: '#000', marginTop: '3px', fontWeight: 'bold', minHeight: '18px' }}>{staticState}</p>
+        <p style={{ ...smallTextStyle, color: '#000', marginTop: '3px', fontWeight: 'bold', minHeight: '18px' }}>{message}</p>
         
-        <div style={{ height: '6px' }}></div> {/* REDUCCIÓN AQUÍ: height: 6px */}
+        <div style={{ height: '6px' }}></div>
         <div style={rowStyle}>
           <button onClick={onReset} disabled={isLoading} style={{ ...reagentStyle, ...btnDefaultStyle, ...(isLoading ? disabledStyle : {}) }}>
             Reiniciar Simulación
@@ -89,7 +100,7 @@ export default function ControlPanel({
         <button onClick={onAskAI} disabled={isLoading} style={{ ...reagentStyle, ...btnAiStyle, width: '100%', ...(isLoading ? disabledStyle : {}) }}>
           ¿Qué es una titulación?
         </button>
-        <p style={{ ...smallTextStyle, marginTop: '6px', minHeight: '30px', maxHeight: '90px', overflowY: 'auto', color: '#000' }}> {/* REDUCCIÓN AQUÍ */}
+        <p style={{ ...smallTextStyle, marginTop: '6px', minHeight: '30px', maxHeight: '90px', overflowY: 'auto', color: '#000' }}>
           {aiResponse}
         </p>
       </CustomControlCard>
