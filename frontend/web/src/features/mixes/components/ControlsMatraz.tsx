@@ -27,7 +27,7 @@ const ControlsMatraz: React.FC<ControlsMatrazProps> = ({
   onExplode
 }) => {
   return (
-    <div className="card">
+    <div className="">
       <div className="row">
         <button 
           className="reagent rA"

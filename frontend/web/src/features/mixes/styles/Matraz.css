@@ -1,16 +1,12 @@
 .mezclas-view {
   font-family: 'Comic Neue', 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
   display: flex;
+  flex-direction: column; /* ← AÑADIDO para empujar el footer al final */
   gap: 24px;
   padding: 24px;
-  background: 
-    radial-gradient(circle at 10% 20%, #ffd6cc 0%, transparent 20%),
-    radial-gradient(circle at 90% 30%, #ccf5ff 0%, transparent 20%),
-    radial-gradient(circle at 50% 80%, #e6ccff 0%, transparent 20%),
-    radial-gradient(circle at 30% 50%, #ffffcc 0%, transparent 20%),
-    linear-gradient(135deg, #ff9999 0%, #99ccff 50%, #99ff99 100%);
+  overflow: hidden;
   color: #2d3748;
-  min-height: 100vh;
+  min-height: 100vh; /* Mantener para toda la altura de la ventana */
   position: relative;
   overflow-x: auto;
   animation: backgroundShift 15s ease-in-out infinite;
@@ -80,18 +76,7 @@
   overflow: hidden;
 }
 
-.mezclas-view .card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, 
-    #ff6b6b, #ffd93d, #6bcf7f, #4d96ff, #9d4edd);
-  background-size: 200% 100%;
-  animation: rainbow 3s linear infinite;
-}
+
 
 @keyframes rainbow {
   0% { background-position: 200% 0; }
@@ -226,7 +211,7 @@
   appearance: none;
   height: 8px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+  background: linear-gradient(90deg,  #4d96ff);
   outline: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -573,72 +558,134 @@
   50% { transform: scale(1.05); }
 }
 
-/* Contenedor principal */
-.mezclas-main-container {
+/* ===== NUEVO LAYOUT REESTRUCTURADO ===== */
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.top-section {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Izquierda más ancha */
-  gap: 30px;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
   align-items: start;
 }
 
-/* Panel izquierdo con matraz y chat */
-.left-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.bottom-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
 }
 
-/* Chat en el lado izquierdo */
-.chat-left-section {
-  width: 100%;
-}
-
-.chat-left-section .chat-container {
-  background: #1e293b;
-  border-radius: 12px;
-  padding: 20px;
-  color: white;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  width: 100%;
-}
-
-/* Panel derecho solo con controles e instrucciones */
-.controls-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Estilos existentes que mantienes */
-.mezclas-view {
-  padding: 20px;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
-
+/* ===== TARJETAS ===== */
 .card {
-  background: white;
+  background: #fefefe;
   border-radius: 15px;
   padding: 25px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e1e8ed;
+  border: 1px solid #dadde3;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-.help-section {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e1e8ed;
+.matraz-card {
+  background: #ffffff;
 }
 
-/* Responsive */
+.chat-card {
+  background: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #2e3a4b;
+}
+
+.controls-row {
+  background: #f8fafc;
+}
+
+.estado-card,
+.instrucciones-card {
+  background: #ffffff;
+}
+
+/* ===== COLORES GENERALES ===== */
+body {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  color: #1e293b;
+}
+
+.navbar-dark {
+  background-color: #1e293b !important;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-  .mezclas-main-container {
+  .top-section {
     grid-template-columns: 1fr;
-    gap: 20px;
+  }
+
+  .bottom-section {
+    grid-template-columns: 1fr;
+  }
+}
+/* ===== NUEVO LAYOUT ORDENADO ===== */
+.mezclas-content {
+  padding-top: 50px;
+  padding: 75px 40px;
+  background-color: #f4f6f8; /* color uniforme, sin degradados */
+  min-height: 100vh;
+  flex: 1;
+}
+
+.mezclas-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ===== SECCIONES ===== */
+.matraz-section,
+.chat-container,
+.controls-container,
+.estado-section,
+.instrucciones-section {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+.matraz-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* ===== COLORES Y TEXTO ===== */
+body {
+  background: #f4f6f8;
+  color: #1e293b;
+}
+
+.card h2, .card h4 {
+  color: #1e293b;
+}
+
+.navbar-dark {
+  background-color: #1e293b !important;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .mezclas-layout {
+    grid-template-columns: 1fr;
   }
 }

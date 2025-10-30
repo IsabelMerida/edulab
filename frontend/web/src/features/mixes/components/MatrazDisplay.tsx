@@ -46,10 +46,6 @@ for (let i = 0; i < 50; i++) {
 ctx.globalAlpha = 1;
 
 // Planetas
-ctx.fillStyle = 'rgba(96, 165, 250, 0.3)';
-ctx.beginPath();
-ctx.arc(100, 100, 40, 0, Math.PI * 2);
-ctx.fill();
 
 ctx.fillStyle = 'rgba(252, 165, 165, 0.3)';
 ctx.beginPath();
